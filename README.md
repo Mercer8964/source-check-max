@@ -1,7 +1,9 @@
-# source-checkm
+# source-check-max
 
 > **A dual-verifier citation check for high-stakes AI output.**
 > Spawns two independent verifiers per citation — one fetches the URL the agent gave, the other rediscovers the URL from scratch using only author/year/title. Cross-compared via a fixed 8-state table. Catches fabricated papers and wrong-URL citations that a single verifier misses.
+
+**Skill name & slash command**: `source-check-max` → invoke with `/source-check-max` (after install, the skill auto-triggers on factual citation claims in high-stakes contexts).
 
 Use it before you ship anything where a fabricated citation has material cost — **legal briefs, medical claims, financial reports, regulatory submissions, academic writing**.
 
@@ -18,7 +20,7 @@ The failure modes that cost money:
 1. **Wrong-URL citations.** Claim is real, but the agent paired it with the wrong URL. A single verifier fetches the URL, sees the content doesn't match, says "citation failed" — but doesn't tell you where the real source is.
 2. **Fabricated papers.** Paper title sounds plausible, authors sound plausible, year is recent. A single verifier fetches whatever the agent gave (404 or unrelated page), says "citation failed" — but the user can't tell if the URL is broken or if the paper itself doesn't exist.
 
-source-checkm separates these.
+source-check-max separates these.
 
 ---
 
@@ -52,20 +54,20 @@ Pick your platform — copy the folder, done.
 
 **Claude Code**
 ```bash
-git clone https://github.com/guoyurui138-hue/source-checkm.git
-cp -r source-checkm/claude-code/source-checkm ~/.claude/skills/
-# Restart Claude Code. Invoke with /source-checkm, or it auto-triggers on
+git clone https://github.com/Mercer8964/source-check-max.git
+cp -r source-check-max/claude-code/source-check-max ~/.claude/skills/
+# Restart Claude Code. Invoke with /source-check-max, or it auto-triggers on
 # citation claims in high-stakes contexts.
 ```
 
 **Codex**
 ```bash
-cp -r source-checkm/codex/source-checkm ~/.agents/skills/
+cp -r source-check-max/codex/source-check-max ~/.agents/skills/
 ```
 
 **OpenClaw**
 ```bash
-cp -r source-checkm/openclaw/source-checkm ~/.openclaw/skills/
+cp -r source-check-max/openclaw/source-check-max ~/.openclaw/skills/
 ```
 
 No config needed. The skill is self-contained — V1 and V2 prompts are inlined.
@@ -88,7 +90,7 @@ No config needed. The skill is self-contained — V1 and V2 prompts are inlined.
 
 ## What you get back
 
-After source-checkm runs, every citation has:
+After source-check-max runs, every citation has:
 
 - A single-word headline (the 8-state label above)
 - The V1 verifier's evidence quote + URL
@@ -123,12 +125,12 @@ V2: 5 independent search strategies, no candidate matches metadata
 
 Validated against a 13-case test set with known ground truth (2 real-and-correct, 3 real-claim-wrong-URL, 6 fabricated, 2 real-paper-wrong-claim).
 
-| Comparison | Actionable advantage of source-checkm over single verifier |
+| Comparison | Actionable advantage of source-check-max over single verifier |
 |---|---|
 | v8 — vs older single-verifier source-check | **8/13** |
 | v9 — vs current source-check (with negative-control + cross-corroboration already absorbed) | **7/13** |
 
-The 7 cases where source-checkm wins:
+The 7 cases where source-check-max wins:
 - **3/3 wrong-URL cases** — V2 finds the correct URL and surfaces it (V1 alone only tells you "verification failed")
 - **4/6 fully-fabricated citations** — metadata gate fails on author/year/title; user gets a clear `LIKELY_FABRICATED` signal instead of an ambiguous "verification failed"
 
@@ -147,7 +149,7 @@ Full per-case results, methodology, and reasoning in **[EVIDENCE.md](./EVIDENCE.
 - **Same-model-family V1 and V2 share biases.** Cross-family pinning (V1 → Anthropic, V2 → OpenAI/DeepSeek) is recommended for highest-stakes use but not enforced. Preference Leakage (ICLR 2026) reports same-family 28–37% correlated false positives vs ±1.5% cross-family — meaningful but unmeasured in our test.
 - **The `LIKELY_FABRICATED` label is loose when the paper is real but cited with wrong authors** (e.g., "Attention Is All You Need" attributed to Smith/Jones/Williams). The verdict — that the citation as written cannot be verified — is correct, but the label is more alarmist than it should be. A future version may add a `LIKELY_MISATTRIBUTED` state.
 - **If the main agent didn't give a URL**, V1 must search the web itself, and its behavior converges toward V2. The advantage of having two verifiers shrinks.
-- **source-checkm catches fabrication and wrong-URL only.** It does **not** catch subtle paraphrase distortions — cases where the source mostly matches the claim, but a key qualifier was silently dropped. That's a different failure mode and needs an audit-loop-style skill.
+- **source-check-max catches fabrication and wrong-URL only.** It does **not** catch subtle paraphrase distortions — cases where the source mostly matches the claim, but a key qualifier was silently dropped. That's a different failure mode and needs an audit-loop-style skill.
 
 ---
 
@@ -161,9 +163,9 @@ The metadata gate (author/year/title) is what prevents the most dangerous failur
 
 ## Files in this repo
 
-- `claude-code/source-checkm/SKILL.md` — Claude Code variant (uses `Agent` tool)
-- `codex/source-checkm/SKILL.md` — Codex variant (uses custom agents in `~/.codex/agents/`)
-- `openclaw/source-checkm/SKILL.md` — OpenClaw variant (uses `sessions_spawn` + `sessions_yield`)
+- `claude-code/source-check-max/SKILL.md` — Claude Code variant (uses `Agent` tool)
+- `codex/source-check-max/SKILL.md` — Codex variant (uses custom agents in `~/.codex/agents/`)
+- `openclaw/source-check-max/SKILL.md` — OpenClaw variant (uses `sessions_spawn` + `sessions_yield`)
 - `EVIDENCE.md` — full v8 + v9 test methodology, per-case results, why-this-works analysis
 
 ---

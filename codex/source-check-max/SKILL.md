@@ -1,9 +1,9 @@
 ---
-name: source-checkm
+name: source-check-max
 description: High-stakes citation verifier. For each factual citation, spawns TWO independent verifiers in parallel — V1 fetches the URL the agent gave; V2 receives ONLY author+year+title, must rediscover the URL itself, and must pass an author/year/title gate before content verification. V1+V2 combined via 8-state headline table. Catches (a) wrong-URL citations by surfacing the correct URL, (b) fabricated papers by failing the metadata gate. Use for legal / medical / financial / regulatory citations where fabrication has material cost. For everyday work use source-check.
 ---
 
-# source-checkm (Codex)
+# source-check-max (Codex)
 
 Dual-verifier check for high-stakes factual citations. Modifies only the factual_citation path.
 
@@ -154,7 +154,7 @@ domain_distinct_from_claim flag.
 - **v8 (vs prior single-verifier source-check)**: 8/13 actionable advantage.
 - **v9 (vs current source-check with negative control absorbed)**: 7/13 actionable advantage. V2 catches 3/3 wrong-URL cases and 4/6 fabricated citations.
 
-Full test set, per-case results, methodology: https://github.com/Mercer8964/source-checkm/blob/main/EVIDENCE.md
+Full test set, per-case results, methodology: https://github.com/Mercer8964/source-check-max/blob/main/EVIDENCE.md
 
 ## Limits
 
