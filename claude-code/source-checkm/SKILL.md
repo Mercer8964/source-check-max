@@ -142,7 +142,7 @@ Compute "URL same paper?" by comparing V1.fetched_url vs V2.fetched_url (normali
 - **v8 (vs prior single-verifier source-check)**: 8/13 actionable advantage.
 - **v9 (vs current source-check with negative control + cross-corroboration)**: 7/13 actionable advantage. V2 still catches 3/3 wrong-URL cases (CONFLICT_REVIEW — gives the correct URL) and 4/6 fully-fabricated citations (LIKELY_FABRICATED — metadata gate fails).
 
-See EVIDENCE.md in the repo for the full test set and per-case results.
+Full test set, per-case results, methodology: https://github.com/Mercer8964/source-checkm/blob/main/EVIDENCE.md
 
 ## Limits
 

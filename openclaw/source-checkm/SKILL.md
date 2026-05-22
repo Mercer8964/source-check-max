@@ -163,7 +163,7 @@ Preference Leakage (ICLR 2026): same-family 28–37% correlated false positives 
 - **v8 (vs prior single-verifier source-check)**: 8/13 actionable advantage.
 - **v9 (vs current source-check with negative control absorbed)**: 7/13 actionable advantage. V2 catches 3/3 wrong-URL cases and 4/6 fabricated citations.
 
-See EVIDENCE.md in the repo.
+Full test set, per-case results, methodology: https://github.com/Mercer8964/source-checkm/blob/main/EVIDENCE.md
 
 ## Limits
 
